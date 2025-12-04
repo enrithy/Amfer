@@ -61,8 +61,8 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.End
 })
 
+local mobile_button_ui = Instance.new('ImageButton')
 local mobile_hidden_gui = Instance.new('ScreenGui')
-local mobile_button_ui = Instance.new('ImageLabel')
 
 mobile_hidden_gui.Enabled = UserInputService.TouchEnabled
 mobile_hidden_gui.Parent = Players.LocalPlayer.PlayerGui
