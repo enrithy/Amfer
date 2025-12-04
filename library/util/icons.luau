@@ -1,5 +1,4 @@
 return{
-assets={
 ["lucide-accessibility"]="rbxassetid://10709751939",
 ["lucide-activity"]="rbxassetid://10709752035",
 ["lucide-air-vent"]="rbxassetid://10709752131",
@@ -818,5 +817,4 @@ assets={
 ["lucide-x-square"]="rbxassetid://10747384217",
 ["lucide-zoom-in"]="rbxassetid://10747384552",
 ["lucide-zoom-out"]="rbxassetid://10747384679"
-}
 }
