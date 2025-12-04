@@ -11,6 +11,8 @@ return rawget(a,b)
 end
 })
 
+local assets = loadstring(game:HttpGet('https://raw.githubusercontent.com/enrithy/Amfer/refs/heads/main/library/util/icons.luau'))()
+
 local b,c={
 {
 1,
@@ -3558,7 +3560,6 @@ return d
 end,
 [28]=function()
 c(28)
-local assets = loadstring(game:HttpGet('https://raw.githubusercontent.com/enrithy/Amfer/refs/heads/main/library/util/icons.luau'))()
 end,
 [30]=function()local
 aa, ab, ac=c(30)
