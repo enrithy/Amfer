@@ -1,4 +1,6 @@
+local UserInputService = cloneref(game:GetService('UserInputService'))
 local HttpService = cloneref(game:GetService('HttpService'))
+local Players = cloneref(game:GetService('Players'))
 
 local Connections = {}
 local Config, Fetcher = {}, {}
@@ -59,6 +61,25 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.End
 })
 
+local mobile_hidden_gui = Instance.new('ScreenGui')
+local mobile_button_ui = Instance.new('ImageLabel')
+
+mobile_hidden_gui.Enabled = UserInputService.TouchEnabled
+mobile_hidden_gui.Parent = Players.LocalPlayer.PlayerGui
+mobile_hidden_gui.ResetOnSpawn = false
+
+mobile_button_ui.TextColor3 = Color3.fromRGB(255, 255, 255)
+mobile_button_ui.Position = UDim2.new(0, 50, 0, 50)
+mobile_button_ui.Image = 'rbxassetid://10723346959'
+mobile_button_ui.Size = UDim2.new(0, 200, 0, 50)
+mobile_button_ui.Font = Enum.Font.SourceSans
+mobile_button_ui.Parent = mobile_hidden_gui
+mobile_button_ui.BackgroundTransparency = 1
+
+mobile_button_ui.MouseButton1Click:Connect(function()
+    Window:Minimizer()
+end)
+
 local function update(property, value, callback)
     Connections[property] = value
     callback(value)
@@ -72,6 +93,13 @@ local function create_signal(signal)
             title = button.Title or '',
             description = button.Description or '',
             callback = button.Callback or (function() end)
+        })
+    end
+
+    function signal:create_paragraph(paragraph)
+        return signal:AddParagraph({
+            title = paragraph.Title or '',
+            content = paragraph.Content or ''
         })
     end
 
