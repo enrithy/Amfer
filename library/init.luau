@@ -80,7 +80,7 @@ end)
 
 local function update(property, value, callback)
     Connections[property] = value
-    callback(value)
+    task.spawn(callback, value)
 
     save_config()
 end
