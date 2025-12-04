@@ -68,11 +68,9 @@ mobile_hidden_gui.Enabled = UserInputService.TouchEnabled
 mobile_hidden_gui.Parent = Players.LocalPlayer.PlayerGui
 mobile_hidden_gui.ResetOnSpawn = false
 
-mobile_button_ui.TextColor3 = Color3.fromRGB(255, 255, 255)
 mobile_button_ui.Position = UDim2.new(0, 50, 0, 50)
 mobile_button_ui.Image = 'rbxassetid://10723346959'
-mobile_button_ui.Size = UDim2.new(0, 200, 0, 50)
-mobile_button_ui.Font = Enum.Font.SourceSans
+mobile_button_ui.Size = UDim2.new(0, 44, 0, 44)
 mobile_button_ui.Parent = mobile_hidden_gui
 mobile_button_ui.BackgroundTransparency = 1
 
