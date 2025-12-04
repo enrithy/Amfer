@@ -79,14 +79,13 @@ mobile_button_ui.MouseButton1Click:Connect(function()
     Window:Minimize()
 end)
 
-local function update(property, value, callback)
-    Connections[property] = value
+local function callback(property, callback)
+    return function(value)
+        Connections[property] = value
+        save_config()
 
-    if callback then
         task.spawn(callback, value)
     end
-
-    save_config()
 end
 
 local function create_signal(signal)
@@ -124,9 +123,7 @@ local function create_signal(signal)
         end
 
         toggle.default = fetcher_config()[toggle.flag] or Connections[toggle.flag]
-        toggle.callback = function(value)
-            update(toggle.flag, value, toggle.callback)
-        end
+        toggle.callback = callback(toggle.flag, toggle.callback)
 
         return signal:AddToggle(connection, {
             Title = toggle.title or '',
@@ -148,9 +145,7 @@ local function create_signal(signal)
         end
 
         keybind.default = fetcher_config()[keybind.flag] or Connections[keybind.flag]
-        keybind.callback = function(value)
-            update(keybind.flag, value, keybind.callback)
-        end
+        keybind.callback = callback(keybind.flag, keybind.callback)
 
         return signal:AddKeybind(connection, {
             Title = keybind.title or '',
@@ -181,9 +176,7 @@ local function create_signal(signal)
         end
 
         dropdown.default = fetcher_config()[dropdown.flag] or Connections[dropdown.flag]
-        dropdown.callback = function(value)
-            update(dropdown.flag, value, dropdown.callback)
-        end
+        dropdown.callback = callback(dropdown.flag, dropdown.callback)
 
         return signal:AddDropdown(connection, {
             Title = dropdown.title or '',
@@ -207,9 +200,7 @@ local function create_signal(signal)
         end
 
         slider.default = fetcher_config()[slider.flag] or Connections[slider.flag]
-        slider.callback = function(value)
-            update(slider.flag, value, slider.callback)
-        end
+        slider.callback = callback(slider.flag, slider.callback)
 
         return signal:AddSlider(connection, {
             Title = slider.title or '',
@@ -234,9 +225,7 @@ local function create_signal(signal)
         end
 
         input.default = fetcher_config()[input.flag] or Connections[input.flag]
-        input.callback = function(value)
-            update(input.flag, value, input.callback)
-        end
+        input.callback = callback(input.flag, input.callback)
 
         return signal:AddInput(connection, {
             Title = input.title or '',
