@@ -88,157 +88,161 @@ end
 local function create_signal(signal)
     function signal:create_button(button)
         return signal:AddButton({
-            title = button.Title or '',
-            description = button.Description or '',
-            callback = button.Callback or (function() end)
+            Title = button.title or '',
+            Description = button.description or '',
+            Callback = button.callback or (function() end)
         })
     end
 
     function signal:create_paragraph(paragraph)
         return signal:AddParagraph({
-            title = paragraph.Title or '',
-            content = paragraph.Content or ''
+            Title = paragraph.title or '',
+            Content = paragraph.content or ''
         })
     end
 
     function signal:create_dialog(dialog)
         return Window:Dialog({
-            title = dialog.Title or '',
-            content = dialog.Content or '',
-            buttons = dialog.Buttons or {}
+            Title = dialog.title or '',
+            Content = dialog.content or '',
+            Buttons = dialog.buttons or {}
         })
     end
 
     function signal:create_toggle(connection, toggle)
-        toggle.Flag = toggle.Flag or connection
-        toggle.Default = toggle.Default or false
-        toggle.Callback = toggle.Callback or (function() end)
+        toggle.flag = toggle.flag or connection
 
-        if not fetcher_config()[toggle.Flag] and not Connections[toggle.Flag] then
-            Connections[toggle.Flag] = toggle.Default
+        toggle.default = toggle.default or false
+        toggle.callback = toggle.callback or (function() end)
+
+        if not fetcher_config()[toggle.flag] and not Connections[toggle.flag] then
+            Connections[toggle.flag] = toggle.default
         end
 
-        toggle.Default = fetcher_config()[toggle.Flag] or Connections[toggle.Flag]
-        toggle.Callback = function(value)
-            update(toggle.Flag, value, toggle.Callback)
+        toggle.default = fetcher_config()[toggle.flag] or Connections[toggle.flag]
+        toggle.callback = function(value)
+            update(toggle.flag, value, toggle.callback)
         end
 
         return signal:AddToggle(connection, {
             Title = toggle.title or '',
-            description = toggle.Description or '',
-            default = toggle.Default,
-            flag = toggle.Flag,
+            Description = toggle.description or '',
+            Default = toggle.default,
+            flag = toggle.flag,
             Callback = toggle.callback
         })
     end
 
     function signal:create_keybind(connection, keybind)
-        keybind.Mode = keybind.Mode or 'Toggle'
-        keybind.Default = keybind.Default or 'E'
-        keybind.Flag = keybind.Flag or connection
-        keybind.Callback = keybind.Callback or (function() end)
+        keybind.flag = keybind.flag or connection
 
-        if not fetcher_config()[keybind.Flag] and not Connections[keybind.Flag] then
-            Connections[keybind.Flag] = keybind.Default
+        keybind.default = keybind.default or 'E'
+        keybind.callback = keybind.callback or (function() end)
+
+        if not fetcher_config()[keybind.flag] and not Connections[keybind.flag] then
+            Connections[keybind.flag] = keybind.default
         end
 
-        keybind.Default = fetcher_config()[keybind.Flag] or Connections[keybind.Flag]
-        keybind.Callback = function(value)
-            update(keybind.Flag, value, keybind.Callback)
+        keybind.default = fetcher_config()[keybind.flag] or Connections[keybind.flag]
+        keybind.callback = function(value)
+            update(keybind.flag, value, keybind.callback)
         end
 
         return signal:AddKeybind(connection, {
-            title = keybind.Title or '',
-            description = keybind.Description or '',
-            mode = keybind.Mode,
-            default = keybind.Default,
-            flag = keybind.Flag,
-            callback = keybind.Callback
+            Title = keybind.title or '',
+            Description = keybind.description or '',
+            Mode = keybind.mode or 'Toggle',
+            Default = keybind.default,
+            flag = keybind.flag,
+            Callback = keybind.callback
         })
     end
 
     function signal:create_dropdown(connection, dropdown)
-        dropdown.Values = dropdown.Values or {}
-        dropdown.Multi = dropdown.Multi or false
-        dropdown.Default = dropdown.Default or 1
-        dropdown.Flag = dropdown.Flag or connection
-        dropdown.Callback = dropdown.Callback or (function() end)
+        dropdown.flag = dropdown.flag or connection
 
-        if dropdown.Multi and not fetcher_config()[dropdown.Flag] and not Connections[dropdown.Flag] then
-            Connections[dropdown.Flag] = {}
+        dropdown.options = dropdown.options or {}
+        dropdown.multi = dropdown.multi or false
+        dropdown.default = dropdown.default or 1
+        dropdown.callback = dropdown.callback or (function() end)
 
-            for _, value in pairs(dropdown.Values) do
-                Connections[dropdown.Flag][value] = false
+        if dropdown.multi and not fetcher_config()[dropdown.flag] and not Connections[dropdown.flag] then
+            Connections[dropdown.flag] = {}
+
+            for _, value in pairs(dropdown.options) do
+                Connections[dropdown.flag][value] = false
             end
-        elseif not fetcher_config()[dropdown.Flag] and not Connections[dropdown.Flag] then
-            Connections[dropdown.Flag] = dropdown.Default
+        elseif not fetcher_config()[dropdown.flag] and not Connections[dropdown.flag] then
+            Connections[dropdown.flag] = dropdown.default
         end
 
-        dropdown.Default = fetcher_config()[dropdown.Flag] or Connections[dropdown.Flag]
-        dropdown.Callback = function(value)
-            update(dropdown.Flag, value, dropdown.Callback)
+        dropdown.default = fetcher_config()[dropdown.flag] or Connections[dropdown.flag]
+        dropdown.callback = function(value)
+            update(dropdown.flag, value, dropdown.callback)
         end
 
         return signal:AddDropdown(connection, {
-            title = dropdown.Title or '',
-            description = dropdown.Description or '',
-            options = dropdown.Values,
-            multi = dropdown.Multi,
-            default = dropdown.Default,
-            flag = dropdown.Flag,
-            callback = dropdown.Callback
+            Title = dropdown.title or '',
+            Description = dropdown.description or '',
+            Values = dropdown.options,
+            Multi = dropdown.multi,
+            Default = dropdown.default,
+            flag = dropdown.flag,
+            Callback = dropdown.callback
         })
     end
 
     function signal:create_slider(connection, slider)
-        slider.Default = slider.Default or 0
-        slider.Flag = slider.Flag or connection
-        slider.Callback = slider.Callback or (function() end)
+        slider.flag = slider.flag or connection
 
-        if not fetcher_config()[slider.Flag] and not Connections[slider.Flag] then
-            Connections[slider.Flag] = slider.Default
+        slider.default = slider.default or 0
+        slider.callback = slider.callback or (function() end)
+
+        if not fetcher_config()[slider.flag] and not Connections[slider.flag] then
+            Connections[slider.flag] = slider.default
         end
 
-        slider.Default = fetcher_config()[slider.Flag] or Connections[slider.Flag]
-        slider.Callback = function(value)
-            update(slider.Flag, value, slider.Callback)
+        slider.default = fetcher_config()[slider.flag] or Connections[slider.flag]
+        slider.callback = function(value)
+            update(slider.flag, value, slider.callback)
         end
 
         return signal:AddSlider(connection, {
-            title = slider.Title or '',
-            description = slider.Description or '',
-            min = slider.Min or 0,
-            max = slider.Max or 100,
-            default = slider.Default,
-            rounding = slider.Rounding or 1,
-            flag = slider.Flag,
-            callback = slider.Callback
+            Title = slider.title or '',
+            Description = slider.description or '',
+            Min = slider.min or 0,
+            Max = slider.max or 100,
+            Default = slider.default,
+            Rounding = slider.rounding or 1,
+            flag = slider.flag,
+            Callback = slider.callback
         })
     end
 
     function signal:create_input(connection, input)
-        input.Default = input.Default or ''
-        input.Flag = input.Flag or connection
-        input.Callback = input.Callback or (function() end)
+        input.flag = input.flag or connection
 
-        if not fetcher_config()[input.Flag] and not Connections[input.Flag] then
-            Connections[input.Flag] = input.Default
+        input.default = input.default or ''
+        input.callback = input.callback or (function() end)
+
+        if not fetcher_config()[input.flag] and not Connections[input.flag] then
+            Connections[input.flag] = input.default
         end
 
-        input.Default = fetcher_config()[input.Flag] or Connections[input.Flag]
-        input.Callback = function(value)
-            update(input.Flag, value, input.Callback)
+        input.default = fetcher_config()[input.flag] or Connections[input.flag]
+        input.callback = function(value)
+            update(input.flag, value, input.callback)
         end
 
         return signal:AddInput(connection, {
-            title = input.Title or '',
-            description = input.Description or '',
-            default = input.Default,
-            placeholder = input.Placeholder or '',
-            numeric = input.Numeric or false,
-            finished = input.Finished or false,
-            flag = input.Flag,
-            callback = input.Callback
+            Title = input.title or '',
+            Description = input.description or '',
+            Default = input.default,
+            Placeholder = input.place or '',
+            Numeric = input.numeric or false,
+            Finished = input.finished or false,
+            flag = input.flag,
+            Callback = input.callback
         })
     end
 
@@ -261,9 +265,9 @@ end
 
 function Window:notify(index)
     Fluent:Notify({
-        title = index.Title or '',
-        content = index.Content or '',
-        duration = index.Duration or 3
+        Title = index.title or '',
+        Content = index.content or '',
+        Duration = index.duration or 3
     })
 end
 
