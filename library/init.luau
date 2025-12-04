@@ -73,6 +73,7 @@ mobile_button_ui.Image = 'rbxassetid://10723346959'
 mobile_button_ui.Size = UDim2.new(0, 44, 0, 44)
 mobile_button_ui.Parent = mobile_hidden_gui
 mobile_button_ui.BackgroundTransparency = 1
+mobile_button_ui.Draggable = true
 
 mobile_button_ui.MouseButton1Click:Connect(function()
     Window:Minimize()
@@ -80,7 +81,10 @@ end)
 
 local function update(property, value, callback)
     Connections[property] = value
-    task.spawn(callback, value)
+
+    if callback then
+        task.spawn(callback, value)
+    end
 
     save_config()
 end
