@@ -124,11 +124,11 @@ local function create_signal(signal)
         end
 
         return signal:AddToggle(connection, {
-            title = toggle.Title or '',
+            Title = toggle.title or '',
             description = toggle.Description or '',
             default = toggle.Default,
             flag = toggle.Flag,
-            callback = toggle.Callback
+            Callback = toggle.callback
         })
     end
 
