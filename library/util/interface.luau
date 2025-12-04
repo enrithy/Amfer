@@ -2152,10 +2152,10 @@ end,
 d, e, f=c(21)local
 g, h, i, j=
 a.UserInputService, 
-a.TouchInputService, 
+a.TouchInputService,
 a.RunService,
 a.Players
-local k,l=i.RenderStepped,j.LocalPlayer
+local k,l=a.RunService.RenderStepped,j.LocalPlayer
 local m,n=l:GetMouse(),e.Parent.Parent
 local o=f(n.Creator)
 local p,q,r=o.New,n.Components,{}
