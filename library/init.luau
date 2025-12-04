@@ -75,7 +75,7 @@ mobile_button_ui.Parent = mobile_hidden_gui
 mobile_button_ui.BackgroundTransparency = 1
 
 mobile_button_ui.MouseButton1Click:Connect(function()
-    Window:Minimizer()
+    Window:Minimize()
 end)
 
 local function update(property, value, callback)
